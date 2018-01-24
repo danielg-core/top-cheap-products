@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 Marius Grad
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      layout="1column" 
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Gmc\TopCheapProducts\Block\ListProducts" 
+                   name="top_cheap_products" 
+                   template="Gmc_TopCheapProducts::catalog/product/top_cheap_products.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

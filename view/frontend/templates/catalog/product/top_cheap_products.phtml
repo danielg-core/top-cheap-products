@@ -1,0 +1,57 @@
+<?php
+/**
+ * Copyright © 2018 Marius Grad
+ * 
+ * Product list template
+ *
+ * @var $block \Gmc\TopCheapProducts\Block\ListProducts
+ */
+
+$productCollection = $block->getProductCollection();
+$helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<?php if ($productCollection->count()): ?>
+    <?php
+        $image = 'category_page_grid';
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+        
+    $pos = $block->getPositioned();
+    ?>
+    <h2>Top Cheapest Products</h2>
+    <div class="products-grid grid">
+        <ol class="product-items widget-product-grid">
+            <?php /** @var $product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($productCollection as $product): ?>
+                <li class="product-item">
+                    <div class="product-item-info">
+                        <?php
+                        $productImage = $block->getImage($product, $image);
+                        if ($pos != null) {
+                            $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                                . 'top:' . $productImage->getHeight() . 'px;"';
+                        }
+                        ?>
+                        <?php // Product Image ?>
+                        <a href="<?= /* @escapeNotVerified */ $product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+                            <?= $productImage->toHtml() ?>
+                        </a>
+                        <div class="product details product-item-details">
+                            <?php
+                                $productNameStripped = $block->stripTags($product->getName(), null, true);
+                            ?>
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?= /* @escapeNotVerified */ $product->getProductUrl() ?>">
+                                    <?= /* @escapeNotVerified */ $helper->productAttribute($product, $product->getName(), 'name') ?>
+                                </a>
+                            </strong>
+                            <?= $block->getReviewsSummaryHtml($product, $templateType) ?>
+                            <?= /* @escapeNotVerified */ $block->getProductPrice($product) ?>
+                            <?= $block->getProductDetailsHtml($product) ?>
+                            </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+<?php endif;
